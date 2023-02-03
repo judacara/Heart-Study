@@ -1,0 +1,84 @@
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+    
+    
+df = pd.read_csv('framingham.csv')
+
+-----------------------------------------------------------------cleaning of dataset----------------------------------------------------------------------------------
+
+df.rename(columns = {'male': 'Gender', 'age' : 'Age', 'education' : 'Education', 'currentSmoker' : 'Smoker', 
+                     'cigsPerDay' : 'Cigarrets per day', 'BPMeds' : 'Meds for BP', 'prevalentStroke' : 'Strokes in family history',
+                     'prevalentHyp' : 'Hypertension in family history', 'diabetes' : 'Diabetes', 'totChol' : 'Total Cholesterol',
+                     'sysBP' : 'BP - sys', 'diaBP' : 'BP - dia', 'heartRate' : 'Heart Rate', 'glucose' : 'Glucose',
+                     'TenYearCHD' : 'Ten Year Diagnostic'}, inplace=True)
+
+def genero(row):
+    if row['Gender'] == 1:
+        row['Gender'] = 'Male'
+    else:
+        row['Gender'] = 'Female'
+    return row
+
+def education(row):
+    if row['Education'] == 1:
+        row['Education'] = 'High School Incomplete'
+    elif row['Education'] == 2:
+        row['Education'] = 'High School Complete'
+    elif row['Education'] == 3:
+        row['Education'] = 'College Incomplete'
+    else:
+        row['Education'] = 'College Complete'
+    return row
+
+df=df.apply(genero, axis='columns')
+df['Age']=df['Age'].astype(int)
+df['Smoker']=df['Smoker'].astype(int)
+df['Cigarrets per day'][np.isnan(df['Cigarrets per day'])] = 0
+df['Meds for BP'][np.isnan(df['Meds for BP'])] = 0
+df['Strokes in family history'][np.isnan(df['Strokes in family history'])] = 0
+df['Hypertension in family history'][np.isnan(df['Hypertension in family history'])] = 0
+df['Cigarrets per day']=df['Cigarrets per day'].astype(int)
+df['Meds for BP']=df['Meds for BP'].astype(int)
+df['Strokes in family history']=df['Strokes in family history'].astype(int)
+df['Hypertension in family history']=df['Hypertension in family history'].astype(int)
+df['Diabetes']=df['Diabetes'].astype(int)
+df['Ten Year Diagnostic']=df['Ten Year Diagnostic'].astype(int)
+df=df.apply(education, axis='columns')
+
+------------------------------------------------------------------------------analysis---------------------------------------------------------------------------------
+
+sns.catplot(data=df, kind="swarm", x="Diabetes", y="Age", hue="Ten Year Diagnostic")
+plt.title('Distribution of diabetes condition vs age with the diagnostic for ten years')
+
+
+
+
+sns.catplot(data=df, kind="swarm", x="Smoker", y="Age", hue="Ten Year Diagnostic")
+plt.title('Distribution of smoker condition vs age with the diagnostic for ten years')
+
+ratio_smokers_withhd = len(df[(df['Smoker']==1) & (df['Ten Year Diagnostic']==1)]) / len(df[df['Smoker']==1])
+
+ratio_smokers_withouthd = len(df[(df['Smoker']==0) & (df['Ten Year Diagnostic']==1)]) / len(df[df['Smoker']==0])
+
+
+
+sns.catplot(data=df, kind="bar", x="Education", y="Age", hue="Ten Year Diagnostic")
+plt.title('Distribution of education condition vs age with the diagnostic for ten years')
+plt.xticks(rotation=90)
+
+
+sns.catplot(data=df, kind="bar", x="Strokes in family history", y="Age", hue="Ten Year Diagnostic")
+plt.title('Distribution of strokes in family history condition vs age with the diagnostic for ten years')
+
+
+
+
+dfc = df[['Total Cholesterol','BMI', 'Glucose', 'Ten Year Diagnostic']]
+dfc
+dfc.corr(method ='pearson')
+matrix = dfc.corr().round(2)
+sns.heatmap(matrix, annot=True)
+plt.show()
