@@ -2,8 +2,6 @@ After cleaning the data and explore their inner relations we hace the following 
 
 1.	The population that was chosen for this data recollection have more persons with no diabetes; for this reason it’s not possible to determinate if diabetes has a significant impact on heart diseases. However, according to the data given, we could expect that the ratio of people with heart diseases is larger in the population with diabetes. Age seems to have a similar impact on both cases; after 50 years is more probable to develop heart issues.
 
-![alt text](https://github.com/[username]/[reponame]/blob/[branch]/image.jpg?raw=true)
-
 2.	If we analyze the population in relation whether if they are smokers or no we find some interesting results. The amount of non-smokers (2145) is slightly bigger than the amount of smokers (2095). However, the radio of people with heart issues is bigger in the smoker population. Both ratios are not strongly representative, both are under 0.16.
 
 3.	If we try to analyze the population by education in relation with heart issues we find that a similar result in the four scenarios. There are some differences but they are not significant. 
@@ -11,7 +9,5 @@ After cleaning the data and explore their inner relations we hace the following 
 4.	If we analyze it by whether the persons has strokes in the family history or not we find that there’s more probable to have heart issues if there’s a positive stroke history.
 
 5.	If we try to correlate some variables (Total Cholesterol, BMI, Glucose and Diagnostic) we find no significant relation between all of those. The bigger correlation is BMI-Glucose.
-
-![Screenshot](Correlation (Cholesterol-BMI-Glucose-Diagnostic).png)
 
 
